@@ -1,9 +1,10 @@
 import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 import { Component } from 'react';
-import { InfinitySpin } from 'react-loader-spinner';
+import { Circles } from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import { getImages } from 'services/image-gallery-api';
 import { Lightbox } from 'react-modal-image';
+import { ButtonContainer, LoadButton } from './ImageGalleryInfo.styled';
 
 class ImageGalleryInfo extends Component {
   state = {
@@ -22,9 +23,28 @@ class ImageGalleryInfo extends Component {
     if (prevValue !== nextValue) {
       this.page = 1;
       this.setState({ items: [] });
-      this.fetchImages(nextValue);
+      this.fetchImages(nextValue).then(data => {
+        if (data.total === 0) {
+          this.showWarning(
+            'Sorry, there are no images matching your search query. Please try again.'
+          );
+        }
+      });
     }
   }
+
+  showWarning = title => {
+    toast.warn(title, {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
 
   fetchImages = async value => {
     this.setState({ isLoading: true });
@@ -41,22 +61,6 @@ class ImageGalleryInfo extends Component {
 
   handleMoreImage = () => {
     this.page += 1;
-
-    if (this.state.items.length >= this.totalImages) {
-      toast.warn("We're sorry, but you've reached the end of search results.", {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-      });
-
-      return;
-    }
-
     this.fetchImages(this.props.value);
   };
 
@@ -78,11 +82,28 @@ class ImageGalleryInfo extends Component {
       <>
         <ImageGallery hits={items} onImageClick={this.updateChosenImage} />
         {items.length !== 0 && (
-          <button type="button" onClick={this.handleMoreImage}>
-            Load more
-          </button>
+          <ButtonContainer>
+            <LoadButton
+              disabled={this.state.items.length >= this.totalImages}
+              type="button"
+              onClick={this.handleMoreImage}
+            >
+              Load more
+            </LoadButton>
+          </ButtonContainer>
         )}
-        {isLoading && <InfinitySpin width="200" color="#4fa94d" />}
+        {isLoading && (
+          <Circles
+            className="loader"
+            height="80"
+            width="80"
+            color="rgba(190, 86, 250, 1)"
+            ariaLabel="circles-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        )}
         {chosenImage && (
           <Lightbox
             large={chosenImage.largeImageURL}

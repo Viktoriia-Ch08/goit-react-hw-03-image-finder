@@ -14,9 +14,22 @@ code {
     monospace;
 }
 
-svg[data-testid="infinity-spin"] {
+
+svg[data-testid="circles-svg"] {
   position: fixed;
   top: 50%;
   right: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(50%, -50%);
+
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
 }

@@ -10,11 +10,9 @@ class App extends Component {
   state = {
     searchValue: '',
     page: 1,
-    // items: [],
   };
 
   handleSearchingValue = value => {
-    // toast('Wow so easy !');
     this.setState({ searchValue: value });
   };
 
@@ -24,20 +22,10 @@ class App extends Component {
     return (
       <div>
         <Searchbar onSubmitHandler={this.handleSearchingValue} />
-        {/* {this.state.items.length !== 0 ? (
-          <ImageGallery hits={this.state.items} />
-        ) : (
-          <p>No results</p>
-        )} */}
         <ImageGalleryInfo
           value={this.state.searchValue}
           hits={this.state.items}
         />
-        {/* {this.state.items.length !== 0 && (
-          <button type="button" onClick={this.handleLoadMoreButton}>
-            Load more
-          </button>
-        )} */}
         <ToastContainer />
       </div>
     );
