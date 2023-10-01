@@ -1,8 +1,6 @@
 import { Component } from 'react';
 import Searchbar from './Searchbar/Searchbar';
-import axios from 'axios';
-import { ImageGallery } from './ImageGallery/ImageGallery';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import ImageGalleryInfo from './ImageGalleryInfo/ImageGalleryInfo';
