@@ -53,29 +53,4 @@ const Input = styled.input`
   }
 `;
 
-const Button = styled.button`
-  height: 45px;
-  padding: 10px;
-
-  font-family: 'Mooli', sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-
-  text-align: center;
-  text-transform: uppercase;
-
-  border: transparent;
-  border-radius: 10px;
-  background-color: #fff;
-  cursor: pointer;
-
-  transition: background-color 400ms linear;
-
-  &:disabled {
-    background-color: rgba(255, 197, 236, 0.9);
-    color: black;
-    cursor: not-allowed;
-  }
-`;
-
-export { Header, FormElement, Input, Button };
+export { Header, FormElement, Input };

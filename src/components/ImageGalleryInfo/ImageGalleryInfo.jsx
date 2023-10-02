@@ -4,7 +4,8 @@ import { Circles } from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import { getImages } from 'services/image-gallery-api';
 import { Lightbox } from 'react-modal-image';
-import { ButtonContainer, LoadButton } from './ImageGalleryInfo.styled';
+import { ButtonContainer } from './ImageGalleryInfo.styled';
+import { Button } from 'components/Button/Button';
 
 class ImageGalleryInfo extends Component {
   state = {
@@ -80,16 +81,16 @@ class ImageGalleryInfo extends Component {
     const { chosenImage, isLoading, items } = this.state;
     return (
       <>
-        <ImageGallery hits={items} onImageClick={this.updateChosenImage} />
+        <ImageGallery images={items} onImageClick={this.updateChosenImage} />
         {items.length !== 0 && (
           <ButtonContainer>
-            <LoadButton
-              disabled={this.state.items.length >= this.totalImages}
+            <Button
               type="button"
+              disabled={this.state.items.length >= this.totalImages}
               onClick={this.handleMoreImage}
             >
-              Load more
-            </LoadButton>
+              Load More
+            </Button>
           </ButtonContainer>
         )}
         {isLoading && (
@@ -106,7 +107,7 @@ class ImageGalleryInfo extends Component {
         )}
         {chosenImage && (
           <Lightbox
-            large={chosenImage.largeImageURL}
+            large={chosenImage.bigImg}
             onClose={this.resetChosenImage}
           />
         )}

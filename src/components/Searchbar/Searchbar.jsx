@@ -1,5 +1,6 @@
 import { Component } from 'react';
-import { FormElement, Header, Input, Button } from './Searchbar.styled';
+import { FormElement, Header, Input } from './Searchbar.styled';
+import { Button } from 'components/Button/Button';
 
 class Searchbar extends Component {
   state = {
@@ -30,8 +31,8 @@ class Searchbar extends Component {
             onChange={this.handleSearchbarValue}
           />
 
-          <Button type="submit" className="button" disabled={!this.state.value}>
-            <span className="button-label">Search</span>
+          <Button type="submit" disabled={!this.state.value}>
+            Search
           </Button>
         </FormElement>
       </Header>

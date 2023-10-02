@@ -1,14 +1,22 @@
-import { Image, Item, List } from './ImageGallery.styled';
+import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import { List } from './ImageGallery.styled';
 
-export const ImageGallery = ({ hits, onImageClick }) => {
+export const ImageGallery = ({ images, onImageClick }) => {
   return (
     <List>
-      {hits &&
-        hits.map(element => (
-          <Item key={element.id} onClick={() => onImageClick(element)}>
-            <Image src={element.webformatURL} alt={element.tags} />
-          </Item>
-        ))}
+      {images.map(element => {
+        const { id, webformatURL, largeImageURL, tags } = element;
+        return (
+          <ImageGalleryItem
+            key={id}
+            id={id}
+            smallImg={webformatURL}
+            bigImg={largeImageURL}
+            imgName={tags}
+            onImageClick={onImageClick}
+          />
+        );
+      })}
     </List>
   );
 };
