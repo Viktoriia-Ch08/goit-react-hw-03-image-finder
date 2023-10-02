@@ -6,31 +6,37 @@ import { getImages } from 'services/image-gallery-api';
 import { Lightbox } from 'react-modal-image';
 import { ButtonContainer } from './ImageGalleryInfo.styled';
 import { Button } from 'components/Button/Button';
+import { Modal } from 'components/Modal/Modal';
 
 class ImageGalleryInfo extends Component {
   state = {
     items: [],
     chosenImage: null,
     isLoading: false,
+    page: 1,
   };
 
-  page = 1;
   totalImages = 0;
 
-  componentDidUpdate(prevProps, _) {
+  componentDidUpdate(prevProps, prevState) {
     const prevValue = prevProps.value;
     const nextValue = this.props.value;
+    console.log(this.state.page, prevState.page);
 
     if (prevValue !== nextValue) {
-      this.page = 1;
-      this.setState({ items: [] });
-      this.fetchImages(nextValue).then(data => {
+      this.setState({ items: [], page: 1 });
+      this.fetchImages(nextValue, 1).then(data => {
         if (data.total === 0) {
           this.showWarning(
             'Sorry, there are no images matching your search query. Please try again.'
           );
         }
       });
+      return;
+    }
+
+    if (prevState.page !== this.state.page) {
+      this.fetchImages(this.props.value, this.state.page);
     }
   }
 
@@ -47,9 +53,9 @@ class ImageGalleryInfo extends Component {
     });
   };
 
-  fetchImages = async value => {
+  fetchImages = async (value, page) => {
     this.setState({ isLoading: true });
-    const data = await getImages(value, this.page);
+    const data = await getImages(value, page);
     this.totalImages = data.total;
 
     this.setState({
@@ -60,9 +66,8 @@ class ImageGalleryInfo extends Component {
     return data;
   };
 
-  handleMoreImage = () => {
-    this.page += 1;
-    this.fetchImages(this.props.value);
+  incrementPage = () => {
+    this.setState({ page: this.state.page + 1 });
   };
 
   updateChosenImage = image => {
@@ -87,7 +92,7 @@ class ImageGalleryInfo extends Component {
             <Button
               type="button"
               disabled={this.state.items.length >= this.totalImages}
-              onClick={this.handleMoreImage}
+              onClick={this.incrementPage}
             >
               Load More
             </Button>
@@ -111,6 +116,7 @@ class ImageGalleryInfo extends Component {
             onClose={this.resetChosenImage}
           />
         )}
+        <Modal />
       </>
     );
   }
