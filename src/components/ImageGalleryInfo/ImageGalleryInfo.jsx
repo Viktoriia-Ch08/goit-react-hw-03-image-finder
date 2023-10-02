@@ -6,25 +6,23 @@ import { getImages } from 'services/image-gallery-api';
 import { Lightbox } from 'react-modal-image';
 import { ButtonContainer } from './ImageGalleryInfo.styled';
 import { Button } from 'components/Button/Button';
-import { Modal } from 'components/Modal/Modal';
+import Modal from 'components/Modal/Modal';
 
 class ImageGalleryInfo extends Component {
   state = {
-    items: [],
+    images: [],
     chosenImage: null,
     isLoading: false,
     page: 1,
+    totalImages: 0,
   };
-
-  totalImages = 0;
 
   componentDidUpdate(prevProps, prevState) {
     const prevValue = prevProps.value;
     const nextValue = this.props.value;
-    console.log(this.state.page, prevState.page);
 
     if (prevValue !== nextValue) {
-      this.setState({ items: [], page: 1 });
+      this.setState({ images: [], page: 1 });
       this.fetchImages(nextValue, 1).then(data => {
         if (data.total === 0) {
           this.showWarning(
@@ -32,10 +30,9 @@ class ImageGalleryInfo extends Component {
           );
         }
       });
-      return;
     }
 
-    if (prevState.page !== this.state.page) {
+    if (this.state.page !== 1 && prevState.page !== this.state.page) {
       this.fetchImages(this.props.value, this.state.page);
     }
   }
@@ -56,11 +53,11 @@ class ImageGalleryInfo extends Component {
   fetchImages = async (value, page) => {
     this.setState({ isLoading: true });
     const data = await getImages(value, page);
-    this.totalImages = data.total;
 
     this.setState({
-      items: [...this.state.items, ...data.hits],
+      images: [...this.state.images, ...data.hits],
       isLoading: false,
+      totalImages: data.total,
     });
 
     return data;
@@ -83,15 +80,15 @@ class ImageGalleryInfo extends Component {
   };
 
   render() {
-    const { chosenImage, isLoading, items } = this.state;
+    const { chosenImage, isLoading, images, totalImages } = this.state;
     return (
       <>
-        <ImageGallery images={items} onImageClick={this.updateChosenImage} />
-        {items.length !== 0 && (
+        <ImageGallery images={images} onImageClick={this.updateChosenImage} />
+        {images.length !== 0 && (
           <ButtonContainer>
             <Button
               type="button"
-              disabled={this.state.items.length >= this.totalImages}
+              disabled={images.length >= totalImages}
               onClick={this.incrementPage}
             >
               Load More
@@ -111,12 +108,12 @@ class ImageGalleryInfo extends Component {
           />
         )}
         {chosenImage && (
-          <Lightbox
-            large={chosenImage.bigImg}
+          <Modal
             onClose={this.resetChosenImage}
+            name={chosenImage.name}
+            bigImg={chosenImage.bigImg}
           />
         )}
-        <Modal />
       </>
     );
   }
