@@ -12,17 +12,21 @@ class Modal extends Component {
   closeByEscape = event => {
     if (event.code === 'Escape') {
       this.props.onClose();
+      document.body.style.overflow = 'scroll';
     }
   };
   onClose = event => {
     if (event.target === event.currentTarget) {
       this.props.onClose();
+      document.body.style.overflow = 'scroll';
     }
   };
+
   render() {
     const { bigImg, name } = this.props;
+    document.body.style.overflow = 'hidden';
     return (
-      <Overlay onClick={this.onClose}>
+      <Overlay onClick={this.onClose} overflow="hidden">
         <ModalWindow>
           <LargeImg src={bigImg} alt={name} />
         </ModalWindow>

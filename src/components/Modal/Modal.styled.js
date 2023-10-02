@@ -21,17 +21,18 @@ const ModalWindow = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
-  width: 80vw;
-  height: 80vh;
+  width: 70%;
+  height: 70%;
   overflow-y: auto;
 
   transform: translate(-50%, -50%) rotate(0) scale(1);
 
-  background-color: black;
+  background-color: #fff;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12),
     0px 2px 1px rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
+  border-radius: 20px;
 
   transition: transform 300ms linear 200ms, opacity 300ms linear 200ms;
 `;
@@ -39,7 +40,7 @@ const ModalWindow = styled.div`
 const LargeImg = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 export { Overlay, ModalWindow, LargeImg };
