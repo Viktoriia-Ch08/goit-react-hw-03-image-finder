@@ -3,7 +3,6 @@ import { Component } from 'react';
 import { Circles } from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import { getImages } from 'services/image-gallery-api';
-import { Lightbox } from 'react-modal-image';
 import { ButtonContainer } from './ImageGalleryInfo.styled';
 import { Button } from 'components/Button/Button';
 import Modal from 'components/Modal/Modal';
