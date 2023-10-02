@@ -5,7 +5,7 @@ const Header = styled.header`
   top: 0;
   z-index: 10;
   width: 100%;
-  min-height: 80px;
+  height: 45px;
 
   padding: 22px 0;
 
@@ -37,15 +37,16 @@ const FormElement = styled.form`
 `;
 
 const Input = styled.input`
-  width: 250px;
+  width: 200px;
   height: 45px;
-  padding: 5px 18px;
+  padding: 0 18px;
 
   box-shadow: none;
   border: transparent;
   border-radius: 10px;
   background-color: #fff;
   transition: box-shadow 400ms linear;
+  font-family: 'Mooli', sans-serif;
 
   &:focus-visible {
     outline: none;
@@ -55,6 +56,10 @@ const Input = styled.input`
 const Button = styled.button`
   height: 45px;
   padding: 10px;
+
+  font-family: 'Mooli', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
 
   text-align: center;
   text-transform: uppercase;
