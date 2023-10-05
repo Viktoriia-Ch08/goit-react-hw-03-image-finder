@@ -14,7 +14,6 @@ class App extends Component {
     this.setState({ searchValue: value });
   };
 
-  handleLoadMoreButton = () => {};
 
   render() {
     return (
