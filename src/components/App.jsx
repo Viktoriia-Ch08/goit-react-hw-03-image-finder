@@ -7,22 +7,17 @@ import ImageGalleryInfo from './ImageGalleryInfo/ImageGalleryInfo';
 class App extends Component {
   state = {
     searchValue: '',
-    page: 1,
   };
 
   handleSearchingValue = value => {
     this.setState({ searchValue: value });
   };
 
-
   render() {
     return (
       <div>
         <Searchbar onSubmitHandler={this.handleSearchingValue} />
-        <ImageGalleryInfo
-          value={this.state.searchValue}
-          hits={this.state.items}
-        />
+        <ImageGalleryInfo value={this.state.searchValue} />
         <ToastContainer />
       </div>
     );
